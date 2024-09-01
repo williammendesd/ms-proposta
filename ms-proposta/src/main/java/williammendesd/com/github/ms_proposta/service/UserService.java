@@ -14,9 +14,6 @@ import williammendesd.com.github.ms_proposta.repository.UserRepository;
 import williammendesd.com.github.ms_proposta.service.exception.DatabaseException;
 import williammendesd.com.github.ms_proposta.service.exception.ResourceNotFoundException;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class UserService {
     @Autowired

@@ -1,6 +1,5 @@
 package williammendesd.com.github.ms_proposta.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

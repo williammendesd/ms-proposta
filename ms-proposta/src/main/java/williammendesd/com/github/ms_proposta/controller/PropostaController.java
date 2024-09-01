@@ -21,7 +21,7 @@ public class PropostaController {
     private PropostaService service;
 
     @GetMapping()
-    public ResponseEntity<Page<PropostaDTO>> findAll(@PageableDefault(size = 10) Pageable pageable){
+    public ResponseEntity<Page<PropostaDTO>> findAll(@PageableDefault(size = 12) Pageable pageable){
         Page<PropostaDTO> dto = service.findAll(pageable);
         return ResponseEntity.ok(dto);
     }
