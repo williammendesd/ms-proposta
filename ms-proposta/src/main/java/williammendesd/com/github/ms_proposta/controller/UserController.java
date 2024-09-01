@@ -31,6 +31,12 @@ public class UserController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+        UserDTO dto = service.findById(id);
+        return ResponseEntity.ok(dto);
+    }
+
     @PostMapping()
     public ResponseEntity<UserDTO> insert(@RequestBody @Valid UserDTO dto) {
         dto = service.insert(dto);

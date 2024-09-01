@@ -1,7 +1,5 @@
 package williammendesd.com.github.ms_proposta.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import williammendesd.com.github.ms_proposta.dto.PropostaDTO;
-import williammendesd.com.github.ms_proposta.dto.UserDTO;
 import williammendesd.com.github.ms_proposta.service.PropostaService;
 
 import java.net.URI;
@@ -29,11 +26,16 @@ public class PropostaController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<PropostaDTO> findById(@PathVariable Long id){
+        PropostaDTO dto = service.findById(id);
+        return ResponseEntity.ok(dto);
+    }
+
     @PostMapping()
-    public ResponseEntity<PropostaDTO> insert(@RequestBody @Valid PropostaDTO dto, HttpSession s, HttpServletRequest request) {
-        Long userId = (Long) request.getAttribute("userId");
-        System.out.println("\n\n\n\nHEYYYYYYYY\n " + userId);
-        dto = service.insert(dto, userId);
+    public ResponseEntity<PropostaDTO> insert(@RequestBody @Valid PropostaDTO dto) {
+        dto = service.insert(dto);
+
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -42,6 +44,5 @@ public class PropostaController {
 
         return ResponseEntity.created(uri).body(dto);
     }
-
 
 }

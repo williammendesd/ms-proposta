@@ -21,9 +21,8 @@ public class PropostaDTO {
     private BigDecimal valorSolicitado;
     @NotNull(message = "Campo requerido")
     private Integer prazoParaPagamento;
-    @NotNull(message = "Campo requerido")
-    private Boolean aprovado;
 
+    private Boolean aprovado;
     private Long user_id;
 
 //    @NotNull(message = "Campo requerido")

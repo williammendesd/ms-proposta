@@ -11,6 +11,8 @@ import williammendesd.com.github.ms_proposta.dto.UserDTO;
 import williammendesd.com.github.ms_proposta.model.User;
 import williammendesd.com.github.ms_proposta.repository.PropostaRepository;
 import williammendesd.com.github.ms_proposta.repository.UserRepository;
+import williammendesd.com.github.ms_proposta.service.exception.DatabaseException;
+import williammendesd.com.github.ms_proposta.service.exception.ResourceNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,12 +29,13 @@ public class UserService {
     public Page<UserDTO> findAll(Pageable pageable){
         Page<User> page = repository.findAll(pageable);
         return page.map(UserDTO::new);
-//        return lista.stream().map(UserDTO::new).collect(Collectors.toList());
     }
 
     @Transactional
     public UserDTO findById(Long id){
-        User user = repository.findById(id).orElseThrow();
+        User user = repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Recurso não encontrado. ID: " + id)
+        );
         return new UserDTO(user);
     }
 
@@ -51,20 +54,19 @@ public class UserService {
             copyDtoToEntity(dto, entity);
             return new UserDTO(entity);
         } catch (EntityNotFoundException e){
-            // ARRUMAR
-            throw new EntityNotFoundException();
+            throw new ResourceNotFoundException("Recurso não encontrado! Id: " + id);
         }
     }
 
     @Transactional
     public void delete(Long id){
         if(!repository.existsById(id)){
-            throw new EntityNotFoundException();
+            throw new ResourceNotFoundException("Recurso não encontrado! Id: " + id);
         }
         try {
             repository.deleteById(id);
         }catch (EntityNotFoundException e){
-            throw new EntityNotFoundException("Falha de integridade referencial");
+            throw new DatabaseException("Falha de integridade referencial");
         }
     }
 
