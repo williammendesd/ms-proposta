@@ -1,0 +1,11 @@
+{
+  "valorSolicitado": 700.00,
+  "prazoParaPagamento": 36,
+  "user": {
+    "nome": "Lucius",
+    "sobrenome": "Angelo Santos",
+    "cpf": "87866695811",
+    "renda": 9851,
+    "telefone": "22 4585-9652"
+  }
+}

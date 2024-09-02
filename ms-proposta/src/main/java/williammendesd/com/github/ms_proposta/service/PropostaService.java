@@ -41,22 +41,27 @@ public class PropostaService {
     public PropostaDTO insert(PropostaDTO dto){
         try {
             Proposta entity = new Proposta();
-            copyDtoToEntity(dto, entity);
+            User user = dto.getUser();
+            user = userRepository.save(user);
+            copyDtoToEntity(dto, entity, user);
+
             entity.setAprovado(false);
-            Optional<User> user = userRepository.findById(dto.getUser_id());
-            user.ifPresent(entity::setUser);
+
             repository.save(entity);
+
             return new PropostaDTO(entity);
+
         } catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Recurso não encontrado! Id: " + dto.getUser_id());
         }
 
     }
 
-    private void copyDtoToEntity(PropostaDTO dto, Proposta entity) {
+    private void copyDtoToEntity(PropostaDTO dto, Proposta entity, User user) {
         entity.setAprovado(dto.getAprovado());
         entity.setPrazoParaPagamento(dto.getPrazoParaPagamento());
         entity.setValorSolicitado(dto.getValorSolicitado());
-        entity.setUserId(dto.getUser_id());
+        entity.setUserId(user.getId());
+        entity.setUser(user);
     }
 }

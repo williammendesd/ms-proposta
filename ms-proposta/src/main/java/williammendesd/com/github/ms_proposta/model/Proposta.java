@@ -31,7 +31,7 @@ public class Proposta {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name="user_id", updatable=false, insertable=false, nullable = false)
+    @Column(name="user_id", updatable=false, insertable=false)
     private Long userId;
 
 }
